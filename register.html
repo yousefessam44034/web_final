@@ -6,42 +6,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Register</title>
+    <style>
+        /* Add your CSS animation styles here */
+        .page {
+            background-color: rgba(255, 255, 255, 0.6); /* Adjust opacity here */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Keep button styles */
+        button.register {
+            background-color: #2196F3;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        button.register:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <div id="register" class="page">
+            <!-- Register form -->
             <h2>Register</h2>
-            <!-- Specify PHP file as the form action -->
             <form action="process_registration.php" method="post" id="registrationForm">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <br> <br>
+                <input type="email" id="email" name="email" required="">
+                <br><br>
 
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <br>
-                <br>
+                <input type="text" id="name" name="name" required="">
+                <br><br>
 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <br>
-                <br>
+                <input type="password" id="password" name="password" required="">
+                <br><br>
 
                 <label for="tel">Phone Number:</label>
-                <input type="tel" id="tel" name="tel" required>
-                <br>
-                <br>
+                <input type="tel" id="tel" name="tel" required="">
+                <br><br>
+
                 <label for="type">User Type:</label>
-                <select id="type" name="type" required>
+                <select id="type" name="type" required="">
                     <option value="company">Company</option>
                     <option value="passenger">Passenger</option>
                 </select>
 
-                <button type="submit">Register</button>
+                <!-- Register button -->
+                <button class="register" type="submit">Register</button>
             </form>
         </div>
     </div>
+
+    <!-- Include jQuery and script.js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
