@@ -2,7 +2,7 @@
 // Establish database connection
 $servername = "localhost";
 $username = "root";
-$dbname = "flight_booking_system";
+$dbname = "webprojectdb";
 $password = "";
 
 // Create connection

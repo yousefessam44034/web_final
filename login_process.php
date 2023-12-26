@@ -6,7 +6,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "flight_booking_system";
+$dbname = "webprojectdb";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -24,21 +24,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // User authenticated, set session variables and redirect
+        // User authenticated, set session variable and redirect
         $row = $result->fetch_assoc();
 
-        // Set the session variables
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_type'] = $row['type'];
+        // Set the session variable
+        $_SESSION['email'] = $email;
 
         // Redirect to passenger.php or Company.php based on user type
-        if ($_SESSION['user_type'] == 'passenger') {
-            header("Location: passenger.php");
-        } else if ($_SESSION['user_type'] == 'company') {
+        if ($row['type'] == 'passenger') {
+            header("Location: passenger_home.php");
+        } else {
             // Redirect to another page for other user types
-            echo "Redirecting to company_home.php";
-            header("Location: cccccc.php");
-            exit();
+            header("Location: Company.php");
         }
     } else {
         // Invalid credentials, redirect back to login page
