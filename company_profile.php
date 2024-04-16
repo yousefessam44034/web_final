@@ -2,14 +2,14 @@
 session_start();
 
 // Check if the company is logged in
-if (isset($_SESSION['companyID'])) {
-    $companyID = $_SESSION['companyID'];
+if (isset($_SESSION['user_id'])) {
+    $companyID = $_SESSION['user_id'];
 
     // Establish database connection
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "flight_booking_system";
+    $dbname = "webprojectdb";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -87,8 +87,8 @@ if (isset($_SESSION['companyID'])) {
             </div>    
         <div class="navigation">
                 <ul>
-                    <li><a href="cccccc.php" >Home</a></li>
-                    <li><a href="add_flight.php">Add Flight</a></li>
+                    <li><a href="homeCompany.php" >Home</a></li>
+                    <li><a href="add_flight.php">Add Flight</a></li>s
                     <li><a href="flightlist.php">Flights</a></li>
                     <li><a href="#">Messages</a></li>
                     <li><a href="company_profile.php " class="active">profile</a></li>
@@ -108,9 +108,7 @@ if (isset($_SESSION['companyID'])) {
 
                         <label for="tel">Phone Number:</label>
                         <input type="tel" id="tel" name="tel" value="<?php echo $rowCompany['tel']; ?>" required>
-
-                        <!-- Add other company details (Logo, Address, etc.) -->
-
+ 
                         <button type="submit">Save Changes</button>
                     </form>
                 </div>

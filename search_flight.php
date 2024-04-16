@@ -9,8 +9,17 @@
     <link rel="stylesheet" href="styles.css">
     <title>Search Flights</title>
 </head>
-
+<?php
+session_start();
+if (isset($_SESSION['email'])) {
+    // ... (your existing code)
+} else {
+    header("Location: login.html"); // Redirect to login page if not logged in
+    exit();
+}
+?>
 <body>
+    
     <div class="container">
         <div id="search-flight" class="page">
             <h2>Search Flights</h2>

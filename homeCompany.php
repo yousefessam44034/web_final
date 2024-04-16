@@ -2,15 +2,15 @@
 session_start();
 
 // Check if the user is logged in
-if (isset($_SESSION['email'])) {
+if (isset($_SESSION['user_id'])) {
     // Replace this with your actual login logic to get the user's data from the database
-    $loggedInUserEmail = $_SESSION['email'];
+    $loggedInUserId = $_SESSION['user_id'];
 
     // Establish database connection
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "flight_booking_system";
+    $dbname = "webprojectdb";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -18,8 +18,8 @@ if (isset($_SESSION['email'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Fetch user data based on the logged-in user's email
-    $sql = "SELECT * FROM users WHERE email='$loggedInUserEmail'";
+    // Fetch user data based on the logged-in user's ID
+    $sql = "SELECT * FROM users WHERE id='$loggedInUserId'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -39,35 +39,34 @@ if (isset($_SESSION['email'])) {
             <link rel="stylesheet" href="styles.css">
             <title>Company Profile</title>
             <style>
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                    background-color: #333;
+                }
 
-li {
-  float: left;
-}
+                li {
+                    float: left;
+                }
 
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+                li a {
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
 
-li a:hover:not(.active) {
-  background-color: #111;
-}
+                li a:hover:not(.active) {
+                    background-color: #111;
+                }
 
-.active {
-  background-color: #04AA6D;
-}
-</style>
-
+                .active {
+                    background-color: #04AA6D;
+                }
+            </style>
         </head>
 
         <body>
@@ -77,12 +76,11 @@ li a:hover:not(.active) {
 
             <div class="navigation">
                 <ul>
-                    <li><a href="cccccc.php" class="active">Home</a></li>
+                    <li><a href="homeCompany.php" class="active">Home</a></li>
                     <li><a href="add_flight.php">Add Flight</a></li>
                     <li><a href="flightlist.php">Flights</a></li>
-                    <li><a href="#">Messages</a></li>
-                    <li><a href="company_profile.php">profile</a></li>
-
+                    <li><a href="message.php">Messages</a></li>
+                    <li><a href="company_profile.php">Profile</a></li>
                 </ul>
             </div>
 
@@ -99,6 +97,10 @@ li a:hover:not(.active) {
 
                     <label for="tel">Phone Number:</label>
                     <input type="tel" id="tel" name="tel" value="<?php echo $tel; ?>" required>
+
+                    <!-- Add other user details (Bio, Address, Logo Image, etc.) -->
+
+                    <button type="submit">Save Changes</button>
                 </form>
             </div>
 

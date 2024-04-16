@@ -28,6 +28,10 @@ if (isset($_SESSION['email'])) {
         $email = $row['email'];
         $tel = $row['tel'];
 
+        // Fetch flights booked by the user from the booking table
+        $bookingSql = "SELECT * FROM booking WHERE passengerName = '$loggedInUserEmail'";
+        $bookingResult = $conn->query($bookingSql);
+
         // Close the PHP tag to include HTML
         ?>
         <!DOCTYPE html>
@@ -42,12 +46,50 @@ if (isset($_SESSION['email'])) {
 
         <body>
             <div class="container">
-                <div id="passenger-home" class="page">
+            <div class="navigation">
+                <ul>
+                    <li><a href="passenger_home.php" class="active">Home</a></li>
+                    <li><a href="search_flight.php">search Flights</a></li>
+                    <li><a href="message.php">Messages</a></li>
+                    <li><a href="passenger_profile.php">Profile</a></li>
+                </ul>
+            </div>
+                <div id="passenger-home" class="page ">
                     <h2>Welcome, <?php echo $name; ?>!</h2>
                     <p>Email: <?php echo $email; ?></p>
                     <p>Phone Number: <?php echo $tel; ?></p>
-                    <p><a href="passenger_profile.php">View Profile</a></p>
-                    <p><a href="search_flight.php">Search for a Flight</a></p>
+                    
+                    <h3>Your Booked Flights</h3>
+
+                    <table  border="1" text-align="center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Company Name</th>
+                            <th>Passenger Name</th>
+                            <th>Itinerary</th>
+                            <th>Flight ID</th>
+                            <th>Pending Passengers</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Time</th>
+                        </tr>
+                        <?php
+                        while ($bookingRow = $bookingResult->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $bookingRow['id'] . "</td>";
+                            echo "<td>" . $bookingRow['companyName'] . "</td>";
+                            echo "<td>" . $bookingRow['passengerName'] . "</td>";
+                            echo "<td>" . $bookingRow['itinerary'] . "</td>";
+                            echo "<td>" . $bookingRow['flightId'] . "</td>";
+                            echo "<td>" . $bookingRow['pendingPassengers'] . "</td>";
+                            echo "<td>" . $bookingRow['startTime'] . "</td>";
+                            echo "<td>" . $bookingRow['endTime'] . "</td>";
+                            echo "<td>" . $bookingRow['time'] . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </table>
+
                     <!-- Add more links/buttons as needed -->
                 </div>
             </div>

@@ -29,13 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Set the session variable
         $_SESSION['email'] = $email;
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['user_type'] = $row['type'];
 
         // Redirect to passenger.php or Company.php based on user type
         if ($row['type'] == 'passenger') {
             header("Location: passenger_home.php");
         } else {
             // Redirect to another page for other user types
-            header("Location: Company.php");
+            header("Location: homeCompany.php");
         }
     } else {
         // Invalid credentials, redirect back to login page

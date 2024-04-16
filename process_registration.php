@@ -2,8 +2,8 @@
 // Establish database connection
 $servername = "localhost";
 $username = "root";
-$dbname = "webprojectdb";
 $password = "";
+$dbname = "webprojectdb";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -21,15 +21,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tel = $_POST['tel'];
     $type = $_POST['type'];
 
-    $sql = "INSERT INTO users (email, name, password, tel, type)
-            VALUES ('$email', '$name', '$password', '$tel', '$type')";
+    // Prepare the SQL statement with placeholders
+    $sql = "INSERT INTO users (email, name, password, tel, type) VALUES (?, ?, ?, ?, ?)";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "User registered successfully";
+    // Create a prepared statement
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        // Bind parameters to the statement
+        $stmt->bind_param("sssss", $email, $name, $password, $tel, $type);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "User registered successfully";
+            header("Location: login.html");
+            exit; // Prevent further execution after redirection
+        } else {
+            echo "Error registering user";
+        }
+
+        // Close the statement
+        $stmt->close();
     } else {
-        echo "Error registering user: " . $conn->error;
+        echo "Error preparing statement";
     }
 }
 
+// Close the connection
 $conn->close();
 ?>

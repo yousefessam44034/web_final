@@ -5,20 +5,23 @@ body {
     margin: 0;
     padding: 0;
     /* Background image styles */
-    background-image: url('backgorundweb.jpg'); /* Replace 'path/to/your/image.jpg' with your image path */
+    background-image: url('backgorundweb.jpg');
+    /* Replace 'path/to/your/image.jpg' with your image path */
     background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* Optional - keeps the background image fixed while scrolling */
+    background-position: left;
+    background-attachment: fixed;
+    /* Optional - keeps the background image fixed while scrolling */
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 80px;
 }
 
 .page {
-    background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent white background for better readability */
+    background-color: rgba(255, 255, 255, 0.6);
+    /* Adding a semi-transparent white background for better readability */
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -36,4 +39,100 @@ button.register {
 
 button.register:hover {
     transform: scale(1.1);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.page {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    align-items: center;
+    text-align: center;
+}
+
+#registrationForm {
+    text-align: center;
+    align-items: center;
+}
+
+label {
+    width: 100px;
+    display: inline-block;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #04AA6D;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.page {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    align-items: center;
+    text-align: center;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#registrationForm {
+    text-align: center;
+    align-items: center;
 }

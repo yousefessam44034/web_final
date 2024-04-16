@@ -2,15 +2,15 @@
 session_start();
 
 // Check if the user is logged in
-if (isset($_SESSION['email'])) {
+if (isset($_SESSION['user_id'])) {
     // Replace this with your actual login logic to get the user's data from the database
-    $loggedInUserEmail = $_SESSION['email'];
+    $loggedInUserEmail = $_SESSION['user_id'];
 
     // Establish database connection
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "flight_booking_system";
+    $dbname = "webprojectdb";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -19,12 +19,13 @@ if (isset($_SESSION['email'])) {
     }
 
     // Fetch user data based on the logged-in user's email
-    $sqlUser = "SELECT * FROM users WHERE email='$loggedInUserEmail'";
+    $sqlUser = "SELECT * FROM users WHERE id='$loggedInUserEmail'";
     $resultUser = $conn->query($sqlUser);
 
     if ($resultUser->num_rows > 0) {
         $rowUser = $resultUser->fetch_assoc();
-        $companyID = $rowUser['companyID'];
+        $_SESSION['companyID'] = $rowUser['id']; // Assuming 'id' is the primary key in the 'users' table
+        $companyID = $_SESSION['companyID'];
 
         // Close the PHP tag to include HTML
         ?>
@@ -37,34 +38,108 @@ if (isset($_SESSION['email'])) {
             <title>Add Flight</title>
             <link rel="stylesheet" href="style.css">
             <style>
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+        }
 
-li {
-  float: left;
-}
+        .header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
 
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+        .navigation {
+            background-color: #333;
+            overflow: hidden;
+        }
 
-li a:hover:not(.active) {
-  background-color: #111;
-}
+        .navigation a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
 
-.active {
-  background-color: #04AA6D;
-}
-</style>
+        .navigation a:hover {
+            background-color: #111;
+        }
+
+        .navigation .active {
+            background-color: #04AA6D;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #045C3E;
+        }
+        ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                    background-color: #333;
+                }
+
+                li {
+                    float: left;
+                }
+
+                li a {
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
+
+                li a:hover:not(.active) {
+                    background-color: #111;
+                }
+
+
+    </style>
         </head>
 
         <body>
@@ -74,12 +149,11 @@ li a:hover:not(.active) {
 
             <div class="navigation">
                 <ul>
-                    <li><a href="cccccc.php" >Home</a></li>
-                    <li><a href="add_flight.php"class="active">Add Flight</a></li>
+                    <li><a href="homeCompany.php" >Home</a></li>
+                    <li><a href="add_flight.php" class="active">Add Flight</a></li>
                     <li><a href="flightlist.php">Flights</a></li>
                     <li><a href="#">Messages</a></li>
                     <li><a href="company_profile.php">profile</a></li>
-
                 </ul>
             </div>
 
@@ -107,10 +181,10 @@ li a:hover:not(.active) {
                     <input type="text" id="total_passengers" name="total_passengers" required>
                     <br><br>
                     <label for="start_time">Start Time:</label>
-                    <input type="datetime-local" id="start_time" name="start_time" required>
+                    <input type="text" id="start_time" name="start_time" required>
 
                     <label for="end_time">End Time:</label>
-                    <input type="datetime-local" id="end_time" name="end_time" required>
+                    <input type="text" id="end_time" name="end_time" required>
                     <br><br>
                     <label for="completed">Completed (1 for Yes, 0 for No):</label>
                     <input type="text" id="completed" name="completed" required>
