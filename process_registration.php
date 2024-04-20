@@ -1,53 +1,36 @@
 <?php
-// Establish database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "webprojectdb";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+// Include database connection configuration
+include_once 'db_config.php';
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $name = $_POST['name'];
-    $password = $_POST['password'];
-    $tel = $_POST['tel'];
-    $type = $_POST['type'];
+    // Sanitize and validate input
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password securely
+    $tel = filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_STRING);
+    $type = $_POST['type']; // No sanitization as it's a predefined value
 
-    // Prepare the SQL statement with placeholders
-    $sql = "INSERT INTO users (email, name, password, tel, type) VALUES (?, ?, ?, ?, ?)";
+    // Prepare SQL statement to insert user data
+    $stmt = $conn->prepare("INSERT INTO users (email, name, password, tel, type) VALUES (?, ?, ?, ?, ?)");
 
-    // Create a prepared statement
-    $stmt = $conn->prepare($sql);
+    // Bind parameters and execute statement
+    $stmt->bind_param("sssss", $email, $name, $password, $tel, $type);
 
-    if ($stmt) {
-        // Bind parameters to the statement
-        $stmt->bind_param("sssss", $email, $name, $password, $tel, $type);
-
-        // Execute the statement
-        if ($stmt->execute()) {
-            echo "User registered successfully";
-            header("Location: login.html");
-            exit; // Prevent further execution after redirection
-        } else {
-            echo "Error registering user";
-        }
-
-        // Close the statement
-        $stmt->close();
+    if ($stmt->execute()) {
+        echo "User registered successfully";
+        // Redirect to login page after successful registration
+        header("Location: login.html");
+        exit(); // Ensure script execution stops after redirection
     } else {
-        echo "Error preparing statement";
+        echo "Error registering user: " . $stmt->error;
     }
+
+    // Close statement
+    $stmt->close();
 }
 
-// Close the connection
+// Close database connection
 $conn->close();
 ?>

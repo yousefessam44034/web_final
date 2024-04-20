@@ -88,7 +88,6 @@ if (isset($_SESSION['user_id'])) {
                 <h2><?php echo $name; ?>'s Home</h2>
 
                 <!-- Display user details in a form -->
-                <form method="post" action="profile.php">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" value="<?php echo $name; ?>" required>
 
@@ -101,7 +100,6 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Add other user details (Bio, Address, Logo Image, etc.) -->
 
                     <button type="submit">Save Changes</button>
-                </form>
             </div>
 
             <script src="scripts.js"></script>
